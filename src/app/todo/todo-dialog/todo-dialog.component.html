@@ -1,0 +1,45 @@
+<div
+  class="fixed z-10 top-0 left-0 w-full h-full bg-slate-200 bg-opacity-80 flex justify-center items-center"
+  [class]="showDialog ? 'block' : 'hidden'"
+>
+  <div class="w-[50%] h-[50%] flex flex-col items-center bg-white rounded-xl">
+    <div
+      class="w-[100%] h-[100px] flex flex-row justify-between items-center px-10"
+    >
+      <h1>{{ isEdit ? "Edit" : "Add" }} item</h1>
+      <span
+        class="w-10 h-10 rounded-lg bg-slate-200 flex justify-center items-center cursor-pointer"
+        (click)="closeDialog()"
+        >X</span
+      >
+    </div>
+    <form
+      #myForm="ngForm"
+      [formGroup]="inputForm"
+      class="w-full h-full bg-slate-100 rounded-lg flex flex-col justify-around items-center"
+    >
+      <input
+        formControlName="itemName"
+        class="w-[90%] h-20 rounded-lg px-10"
+        placeholder="Task"
+        type="text"
+        name="itemName"
+        required
+      />
+      <input
+        formControlName="itemDate"
+        class="w-[90%] h-20 rounded-lg px-10"
+        type="date"
+        name="itemDate"
+        required
+      />
+      <button
+        type="submit"
+        class="w-[50%] h-10 bg-blue-400 rounded-lg"
+        (click)="handledSubmit(inputForm)"
+      >
+        {{ isEdit ? "Edit" : "Add" }}
+      </button>
+    </form>
+  </div>
+</div>

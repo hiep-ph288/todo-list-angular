@@ -1,0 +1,6 @@
+<div
+  class="w-full overflow-y-auto max-h-[500px] bg-white bg-opacity-50 rounded-xl mt-10 flex flex-col gap-3"
+>
+    <app-todo-item *ngFor="let item of showItem" [items]="item" (handleEdit)="handleEdit($event)" (handleDelete)="handleDelete($event)" (handleStatus)="handleStatus($event)"></app-todo-item>
+</div>
+

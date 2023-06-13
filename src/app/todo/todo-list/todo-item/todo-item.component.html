@@ -1,0 +1,33 @@
+<div
+  class="w-full flex flex-row justify-around items-center rounded-xl bg-white py-2"
+>
+  <div class="w-[60%]">
+    <h1 class="text-[1.5rem] font-medium">{{ items.content }}</h1>
+    <p class="text-[1rem] font-light">{{ items.createdAt | date }}</p>
+  </div>
+
+  <div class="w-[30%] flex flex-row justify-between items-center">
+    <button
+      class="w-[80px] h-[50px] text-[0.8rem] rounded-xl bg-green-400 text-[#fff]"
+      [ngClass]="{
+        'bg-yellow-400': !items.status,
+        'bg-green-500': items.status
+      }"
+      (click)="updateStatus()"
+    >
+      {{ getStatusText(items.status) }}
+    </button>
+    <button
+      class="w-[80px] h-[50px] text-[0.8rem] rounded-xl bg-red-400 text-[#fff]"
+      (click)="deleteItem()"
+    >
+      Delete
+    </button>
+    <button
+      class="w-[80px] h-[50px] text-[0.8rem] rounded-xl bg-blue-500 text-[#fff]"
+      (click)="editItem()"
+    >
+      Edit
+    </button>
+  </div>
+</div>
