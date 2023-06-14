@@ -7,37 +7,31 @@ import { ITodoItem } from 'src/app/interface/interface';
   styleUrls: ['./todo-item.component.scss'],
 })
 export class TodoItemComponent implements OnInit {
-
   @Input() items!: ITodoItem;
-  @Output() handleEdit = new EventEmitter <number>();
-  @Output() handleDelete = new EventEmitter <number>();
-  @Output() handleStatus = new EventEmitter <number>();
-  
-  // itemType: boolean = true;
+  @Output() handleEdit = new EventEmitter<number>();
+  @Output() handleDelete = new EventEmitter<number>();
+  @Output() handleStatus = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
-  editItem(){
+  editItem() {
     this.handleEdit.emit(this.items.id);
   }
 
-  deleteItem(){
-    const result =  confirm("Chắc chắn xóa chứ !");
+  deleteItem() {
+    const result = confirm('Bạn có muốn xoá nó không ?');
     if (result == true) {
       this.handleDelete.emit(this.items.id);
     }
   }
 
-  updateStatus(){
+  updateStatus() {
     this.handleStatus.emit(this.items.id);
   }
-  
-  getStatusText(itemType: boolean | undefined): string{
+
+  getStatusText(itemType: boolean | undefined): string {
     return itemType ? 'Completed' : 'Active';
   }
-
 }
