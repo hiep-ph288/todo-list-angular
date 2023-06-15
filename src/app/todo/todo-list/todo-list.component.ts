@@ -13,7 +13,6 @@ export class TodoListComponent implements OnInit {
   @Output() deleteItem = new EventEmitter <number>();
   @Output() clickStatus = new EventEmitter <number>();
 
-  
   constructor() { }
 
   ngOnInit(): void {

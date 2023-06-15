@@ -37,6 +37,7 @@
         type="submit"
         class="w-[50%] h-10 bg-blue-400 rounded-lg"
         (click)="handledSubmit(inputForm)"
+        [disabled]="disableSubmit"
       >
         {{ isEdit ? "Edit" : "Add" }}
       </button>

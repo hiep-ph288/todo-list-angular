@@ -10,20 +10,35 @@ import { Filter } from 'src/enum/enum';
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent implements OnInit {
-  showItem: ITodoItem[] = [];
   enumFilter = Filter;
-
   selectedFilter: string = Filter.all;
-
   showDialog: boolean = false;
-
   inputForm: FormGroup;
-
   isEdit: boolean | undefined = false;
+  disableSubmit = false;
 
+  private showItem: ITodoItem[] = [];
   idEdit!: number;
 
-  stringTest: string = '';
+  constructor(
+    private itemService: ItemServiceService,
+    private fb: FormBuilder
+  ) {
+    this.inputForm = this.fb.group({
+      itemName: ['', Validators.required],
+      itemDate: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.getItem();
+  }
+
+  private getItem() {
+    this.itemService.getItem().subscribe((data) => {
+      this.showItem = data;
+    });
+  }
 
   filter(filterValue: string) {
     this.selectedFilter = filterValue;
@@ -91,59 +106,11 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  constructor(
-    private itemService: ItemServiceService,
-    private fb: FormBuilder
-  ) {
-    this.inputForm = this.fb.group({
-      itemName: ['', Validators.required],
-      itemDate: ['', Validators.required],
-    });
-  }
-
-  getItem() {
-    this.itemService.getItem().subscribe((data) => {
-      this.showItem = data;
-    });
-  }
-
-  ngOnInit(): void {
-    this.getItem();
-  }
-
-  addItem(todo: FormGroup) {
-    const newItem: ITodoItem = {
-      content: todo.value.itemName,
-      createdAt: todo.value.itemDate,
-      status: false,
-    };
-
-    this.itemService.addItem(newItem).subscribe((data: any) => {
-      this.getItem();
-      this.showDialog = false;
-      this.inputForm.reset();
-    });
-  }
-
-  editItem(todo: FormGroup) {
-    const newItem: ITodoItem = {
-      content: todo.value.itemName,
-      createdAt: todo.value.itemDate,
-    };
-
-    this.itemService.update(this.idEdit, newItem).subscribe((data) => {
-      this.getItem();
-      this.showDialog = false;
-      this.inputForm.reset();
-      this.isEdit = false;
-    });
-  }
-
   submitForm(todo: FormGroup) {
-    if (this.isEdit) {
-      this.editItem(todo);
-    } else {
-      this.addItem(todo);
-    }
+    this.disableSubmit = true;
+    this.itemService.getItem().subscribe((data) => {
+      this.getItem();
+    });
+    this.showDialog = false;
   }
 }
